@@ -112,7 +112,8 @@ def deploy(api, build_dir, deploy_dir, encryption_key, delay=0.0):
                     # `/elements.css` is a special file that cannot be uploaded using the `upload_file` method
                     api_method = api.edit_file
 
-                if api_method(local_path, server_file_path):
+                try:
+                    api_method(local_path, server_file_path)
                     action = "File uploaded" if server_file_path not in file_states else "File updated"
                     logger.info(
                         {
@@ -124,7 +125,7 @@ def deploy(api, build_dir, deploy_dir, encryption_key, delay=0.0):
                     file_states[server_file_path] = local_md5
                     stats["files_uploaded"] += 1
                     time.sleep(delay)
-                else:
+                except:
                     logger.error({"message": "Failed to upload file", "file": local_path})
                     time.sleep(delay)
             else:
