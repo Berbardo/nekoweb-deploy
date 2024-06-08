@@ -113,7 +113,7 @@ def deploy(api, build_dir, deploy_dir, encryption_key, delay=0.0):
                     api_method = api.edit_file
 
                 try:
-                    # api_method(local_path, server_file_path)
+                    api_method(local_path, server_file_path)
                     action = "File uploaded" if server_file_path not in file_states else "File updated"
                     logger.info(
                         {
